@@ -1,0 +1,16 @@
+{
+  "name": "alix-webapp-handson-02",
+  "version": "1.0.0",
+  "description": "",
+  "main": "webapp.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "alix_an@hotmail.com",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.15.2",
+    "redis": "^2.7.1"
+  }
+}
