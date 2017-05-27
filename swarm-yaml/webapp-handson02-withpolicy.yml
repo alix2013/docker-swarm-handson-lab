@@ -1,0 +1,60 @@
+version: "3"
+services:
+  redisdb:
+    image: localregistry:5000/redis:latest
+    ports:
+      - 6379
+    networks:
+      - myappnet
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+  mywebapp:
+    #image: localregistry:5000/webapp-handson-02:v1
+    image: alixan/webapp-handson-02:v2
+    ports:
+      - 80:8000
+    environment:
+       DBNAME: redisdb
+       WEBAPP_PORT: 8000
+    networks:
+      - myappnet
+    depends_on:
+      - redisdb
+    deploy:
+      #mode: replicated
+      replicas: 2
+      labels: [APP=MYWEBAPP]
+      
+      # service resource management begin
+      resources:
+        # Hard limit - Docker does not allow to allocate more
+        limits:
+          cpus: '0.25'
+          memory: 512M
+        # Soft limit - Docker makes best effort to return to it
+        reservations:
+          cpus: '0.25'
+          memory: 256M
+      # service restart policy
+      restart_policy:
+        condition: on-failure
+        delay: 5s
+        max_attempts: 3
+        window: 120s
+      # service update configuration
+      update_config:
+        parallelism: 1
+        delay: 10s
+        failure_action: continue
+        monitor: 60s
+        max_failure_ratio: 0.3
+      # service resource management end
+      # placement constraint - in this case on 'worker' nodes only
+      placement:
+        constraints: [node.role == worker]
+
+networks:
+    myappnet:
+    

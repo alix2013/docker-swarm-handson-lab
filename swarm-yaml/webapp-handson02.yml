@@ -1,0 +1,35 @@
+version: "3"
+services:
+  redisdb:
+    image: redis:latest
+    ports:
+      - 6379
+    networks:
+      - myappnet
+    deploy:
+      placement:
+        constraints: [node.role == manager]
+
+  mywebapp:
+    #image: localregistry:5000/webapp-handson-02:v1
+    image: alixan/webapp-handson-02:v1
+    ports:
+      - 80:8000
+    environment:
+       #DBNAME: ${REDIS_HOST-redisdb}
+       DBNAME: redisdb
+       WEBAPP_PORT: 8000
+    networks:
+      - myappnet
+    depends_on:
+      - redisdb
+    deploy:
+      #mode: replicated
+      replicas: 3
+      labels: [APP=MYWEBAPP]
+      placement:
+        constraints: [node.role == worker]
+
+networks:
+    myappnet:
+    

@@ -1,0 +1,9 @@
+version: "3"
+services:
+  webapp-handson01:
+    image: alixan/webapp-handson-01:v1
+    ports:
+      - 80:8000
+    deploy:
+      replicas: 2
+      
