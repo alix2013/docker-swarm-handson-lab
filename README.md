@@ -72,7 +72,7 @@ docker swarm join \
 
 x.x.x.x:2377
 
-To add a manager to this swarm, run ‘docker swarm join-token manager’ and follow the instructions.}}}
+To add a manager to this swarm, run ‘docker swarm join-token manager’ and follow the instructions.
 
 ```
 ### 增加Worker nodes到cluster 
@@ -153,7 +153,7 @@ Commercial support is available at
 
 <p><em>Thank you for using nginx.</em></p>
 </body>
-</html>}}}
+</html>
 
 [root@node01 ~]# curl http://node03
 [root@node01 ~]# curl http://node01
@@ -205,7 +205,7 @@ COPY app/webapp.js /app
 ENV WEBAPP_PORT=8000 \
     NODE_ENV=production
 EXPOSE $WEBAPP_PORT
-CMD node webapp.js }}}
+CMD node webapp.js 
 
 ```
 
@@ -312,7 +312,7 @@ docker node update --availability drain node02
 观察第一个shell窗口webapp response不中断
 docker service ps webapp, node02 container move 到其他node
 
-``
+```
 docker node update --availability active node02
 ```
 
@@ -324,6 +324,7 @@ docker service scale webapp=4
 ```
 
 actived node开始接受新的创建replica的请求.
+
 
 ### Placement rule 
 
